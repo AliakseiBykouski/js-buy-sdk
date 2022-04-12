@@ -1,39 +1,68 @@
 fragment VariantFragment on ProductVariant {
-  id
-  title
-  price
-  priceV2 {
-    amount
-    currencyCode
-  }
-  weight
-  available: availableForSale
-  sku
-  compareAtPrice
-  compareAtPriceV2 {
-    amount
-    currencyCode
-  }
-  image {
     id
-    src: originalSrc
-    altText
-    width
-    height
-  }
-  selectedOptions {
-    name
-    value
-  }
-  unitPrice {
-    amount
-    currencyCode
-  }
-  unitPriceMeasurement {
-    measuredType
-    quantityUnit
-    quantityValue
-    referenceUnit
-    referenceValue
-  }
+    title
+    price
+    priceV2 {
+        amount
+        currencyCode
+    }
+    weight
+    available: availableForSale
+    sku
+    compareAtPrice
+    compareAtPriceV2 {
+        amount
+        currencyCode
+    }
+    image {
+        id
+        src: originalSrc
+        altText
+        width
+        height
+    }
+    selectedOptions {
+        name
+        value
+    }
+    unitPrice {
+        amount
+        currencyCode
+    }
+    unitPriceMeasurement {
+        measuredType
+        quantityUnit
+        quantityValue
+        referenceUnit
+        referenceValue
+    }
+    sellingPlanAllocations(first: 250) {
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+        }
+        edges {
+            cursor
+            node {
+                sellingPlan {
+                    id
+                    name
+                }
+                priceAdjustments {
+                    price {
+                        amount
+                        currencyCode
+                    }
+                    compareAtPrice {
+                        amount
+                        currencyCode
+                    }
+                    perDeliveryPrice {
+                        amount
+                        currencyCode
+                    }
+                }
+            }
+        }
+    }
 }
