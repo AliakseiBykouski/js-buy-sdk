@@ -1,0 +1,10 @@
+mutation ($cartId: ID!, $lineIds: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+    userErrors {
+      ...CartUserErrorFragment
+    }
+    cart {
+      ...CartFragment
+    }
+  }
+}

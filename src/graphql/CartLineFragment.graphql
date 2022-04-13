@@ -2,7 +2,7 @@ fragment CartLineFragment on CartLine {
   id
   quantity
   merchandise {
-    ...VariantFragment
+    ...VariantWithProductFragment
   }
   estimatedCost {
     subtotalAmount {
