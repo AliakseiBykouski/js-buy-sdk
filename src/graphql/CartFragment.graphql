@@ -1,0 +1,41 @@
+fragment CartFragment on Cart {
+  id
+  note
+  checkoutUrl
+  createdAt
+  updatedAt
+  estimatedCost {
+    subtotalAmount {
+      amount
+      currencyCode
+    }
+    totalAmount {
+      amount
+      currencyCode
+    }
+    totalDutyAmount {
+      amount
+      currencyCode
+    }
+    totalTaxAmount {
+      amount
+      currencyCode
+    }
+  }
+  attributes {
+    key
+    value
+  }
+  lines (first: 250) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    edges {
+      cursor
+      node {
+        ...CartLineFragment
+      }
+    }
+  }
+}

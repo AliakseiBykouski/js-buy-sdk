@@ -1,0 +1,24 @@
+fragment CartLineFragment on CartLine {
+  id
+  quantity
+  merchandise {
+    ...VariantFragment
+  }
+  estimatedCost {
+    subtotalAmount {
+      amount
+      currencyCode
+    }
+    totalAmount {
+      amount
+      currencyCode
+    }
+  }
+  sellingPlanAllocation {
+    ...SellingPlanAllocationFragment
+  }
+  attributes {
+    key
+    value
+  }
+}
