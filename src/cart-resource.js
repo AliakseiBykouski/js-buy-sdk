@@ -130,7 +130,7 @@ class CartResource extends Resource {
    * });
    *
    * @param {String} cartId The ID of the cart to update a line item on.
-   * @param {Object[]} lineItems A list of line item information to update. See the {@link https://help.shopify.com/api/storefront-api/reference/input-object/cartlineitemupdateinput|Storefront API reference} for valid input fields for each line item.
+   * @param {Object[]} lineItems A list of line item information to update. See the {@link https://shopify.dev/api/storefront/2022-04/input-objects/CartLineUpdateInput|Storefront API reference} for valid input fields for each line item.
    * @return {Promise|GraphModel} A promise resolving with the updated cart.
    */
   updateLineItems(cartId, lineItems) {
