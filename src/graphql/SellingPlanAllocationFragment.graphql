@@ -1,0 +1,24 @@
+fragment SellingPlanAllocationFragment on SellingPlanAllocation {
+  sellingPlan {
+    id,
+    name,
+    description,
+    options {
+      ...SellingPlanOptionFragment
+    }
+  },
+  priceAdjustments {
+    price{
+      amount,
+      currencyCode
+    },
+    compareAtPrice{
+      amount,
+      currencyCode
+    },
+    perDeliveryPrice{
+      amount,
+      currencyCode
+    }
+  }
+}

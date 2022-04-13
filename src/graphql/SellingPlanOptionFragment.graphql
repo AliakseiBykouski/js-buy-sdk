@@ -1,0 +1,4 @@
+fragment SellingPlanOptionFragment on SellingPlanOption {
+  name
+  value
+}
