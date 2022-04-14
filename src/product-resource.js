@@ -5,10 +5,15 @@ import productHelpers from './product-helpers';
 
 // GraphQL
 import productNodeQuery from './graphql/productNodeQuery.graphql';
+import productWithPlansNodeQuery from './graphql/productWithPlansNodeQuery.graphql';
 import productNodesQuery from './graphql/productNodesQuery.graphql';
+import productWithPlansNodesQuery from './graphql/productWithPlansNodesQuery.graphql';
 import productConnectionQuery from './graphql/productConnectionQuery.graphql';
+import productWithPlansConnectionQuery from './graphql/productWithPlansConnectionQuery.graphql';
 import productByHandleQuery from './graphql/productByHandleQuery.graphql';
+import productWithPlansByHandleQuery from './graphql/productWithPlansByHandleQuery.graphql';
 import productRecommendationsQuery from './graphql/productRecommendations.graphql';
+import productWithPlansRecommendationsQuery from './graphql/productWithPlansRecommendations.graphql';
 
 /**
  * The JS Buy SDK product resource
@@ -27,12 +32,14 @@ class ProductResource extends Resource {
    *   // Do something with the products
    * });
    *
-   * @param {Int} [pageSize] The number of products to fetch per page
+   * @param {Int} [first] The number of products to fetch per page
+   * @param {Boolean} [withPlans] Flag to include selling plans. Requires unauthenticated_read_selling_plans permission.
    * @return {Promise|GraphModel[]} A promise resolving with an array of `GraphModel`s of the products.
    */
-  fetchAll(first = 20) {
+  fetchAll(first = 20, withPlans = false) {
+    const query = withPlans ? productConnectionQuery : productWithPlansConnectionQuery;
     return this.graphQLClient
-      .send(productConnectionQuery, {first})
+      .send(query, {first})
       .then(defaultResolver('products'))
       .then(paginateProductConnectionsAndResolve(this.graphQLClient));
   }
@@ -46,11 +53,13 @@ class ProductResource extends Resource {
    * });
    *
    * @param {String} id The id of the product to fetch.
+   * @param {Boolean} [withPlans] Flag to include selling plans. Requires unauthenticated_read_selling_plans permission.
    * @return {Promise|GraphModel} A promise resolving with a `GraphModel` of the product.
    */
-  fetch(id) {
+  fetch(id, withPlans = false) {
+    const query = withPlans ? productWithPlansNodeQuery : productNodeQuery;
     return this.graphQLClient
-      .send(productNodeQuery, {id})
+      .send(query, {id})
       .then(defaultResolver('node'))
       .then(paginateProductConnectionsAndResolve(this.graphQLClient));
   }
@@ -65,11 +74,13 @@ class ProductResource extends Resource {
    * });
    *
    * @param {String[]} ids The ids of the products to fetch
+   * @param {Boolean} [withPlans] Flag to include selling plans. Requires unauthenticated_read_selling_plans permission.
    * @return {Promise|GraphModel[]} A promise resolving with a `GraphModel` of the product.
    */
-  fetchMultiple(ids) {
+  fetchMultiple(ids, withPlans = false) {
+    const query = withPlans ? productWithPlansNodesQuery : productNodesQuery;
     return this.graphQLClient
-      .send(productNodesQuery, {ids})
+      .send(query, {ids})
       .then(defaultResolver('nodes'))
       .then(paginateProductConnectionsAndResolve(this.graphQLClient));
   }
@@ -83,11 +94,13 @@ class ProductResource extends Resource {
    * });
    *
    * @param {String} handle The handle of the product to fetch.
+   * @param {Boolean} [withPlans] Flag to include selling plans. Requires unauthenticated_read_selling_plans permission.
    * @return {Promise|GraphModel} A promise resolving with a `GraphModel` of the product.
    */
-  fetchByHandle(handle) {
+  fetchByHandle(handle, withPlans = false) {
+    const query = withPlans ? productWithPlansByHandleQuery : productByHandleQuery;
     return this.graphQLClient
-      .send(productByHandleQuery, {handle})
+      .send(query, {handle})
       .then(defaultResolver('productByHandle'))
       .then(paginateProductConnectionsAndResolve(this.graphQLClient));
   }
@@ -106,11 +119,13 @@ class ProductResource extends Resource {
    *   documented as {@link https://help.shopify.com/api/storefront-api/reference/enum/productsortkeys|Product Sort Keys}.
    *   @param {String} [args.query] A query string. See full documentation {@link https://help.shopify.com/api/storefront-api/reference/object/shop#products|here}
    *   @param {Boolean} [args.reverse] Whether or not to reverse the sort order of the results
+   * @param {Boolean} [withPlans] Flag to include selling plans. Requires unauthenticated_read_selling_plans permission.
    * @return {Promise|GraphModel[]} A promise resolving with an array of `GraphModel`s of the products.
    */
-  fetchQuery({first = 20, sortKey = 'ID', query, reverse} = {}) {
+  fetchQuery({first = 20, sortKey = 'ID', query, reverse} = {}, withPlans = false) {
+    const rootQuery = withPlans ? productWithPlansConnectionQuery : productConnectionQuery;
     return this.graphQLClient
-      .send(productConnectionQuery, {
+      .send(rootQuery, {
         first,
         sortKey,
         query,
@@ -131,11 +146,13 @@ class ProductResource extends Resource {
    * });
    *
    * @param {String} productId The id of the product to fetch.
+   * @param {Boolean} [withPlans] Flag to include selling plans. Requires unauthenticated_read_selling_plans permission.
    * @return {Promise|GraphModel[]} A promise resolving with an array of `GraphModel`s of the products.
    */
-  fetchRecommendations(productId) {
+  fetchRecommendations(productId, withPlans = false) {
+    const query = withPlans ? productWithPlansRecommendationsQuery : productRecommendationsQuery;
     return this.graphQLClient
-      .send(productRecommendationsQuery, {productId})
+      .send(query, {productId})
       .then(defaultResolver('productRecommendations'))
       .then(paginateProductConnectionsAndResolve(this.graphQLClient));
   }

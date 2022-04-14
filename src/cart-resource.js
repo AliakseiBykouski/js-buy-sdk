@@ -20,7 +20,7 @@ class CartResource extends Resource {
    * Fetches a cart by ID.
    *
    * @example
-   * client.cart.fetch('FlZj9rZXlN5MDY4ZDFiZTUyZTUwNTE2MDNhZjg=').then((cart) => {
+   * client.cart.fetch('Z2lkOi8vc2hvcGlmeS9DYXJ0L2QzNDMxMmNiYjU5NGM4MDA0MGJkZWIxMjU4YzAxOGE3').then((cart) => {
    *   // Do something with the cart
    * });
    *
@@ -74,7 +74,7 @@ class CartResource extends Resource {
    * Adds line items to an existing cart.
    *
    * @example
-   * const cartId = 'Z2lkOi8vc2hvcGlmeS9DaGVja291dC9kMTZmM2EzMDM4Yjc4N=';
+   * const cartId = 'Z2lkOi8vc2hvcGlmeS9DYXJ0L2QzNDMxMmNiYjU5NGM4MDA0MGJkZWIxMjU4YzAxOGE3';
    * const lineItems = [{variantId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yOTEwNjAyMjc5Mg==', quantity: 5}];
    *
    * client.cart.addLineItems(cartId, lineItems).then((cart) => {
@@ -82,12 +82,12 @@ class CartResource extends Resource {
    * });
    *
    * @param {String} cartId The ID of the cart to add line items to.
-   * @param {Object[]} lineItems A list of line items to add to the cart. See the {@link https://shopify.dev/api/storefront/2022-01/input-objects/CartLineInput|Storefront API reference} for valid input fields for each line item.
+   * @param {Object[]} lines A list of line items to add to the cart. See the {@link https://shopify.dev/api/storefront/2022-01/input-objects/CartLineInput|Storefront API reference} for valid input fields for each line item.
    * @return {Promise|GraphModel} A promise resolving with the updated cart.
    */
-  addLineItems(cartId, lineItems) {
+  addLineItems(cartId, lines) {
     return this.graphQLClient
-      .send(cartLinesAddMutation, {cartId, lines: lineItems})
+      .send(cartLinesAddMutation, {cartId, lines})
       .then(handleCartMutation('cartLinesAdd', this.graphQLClient));
   }
 
@@ -116,12 +116,12 @@ class CartResource extends Resource {
    * Updates line items on an existing cart.
    *
    * @example
-   * const cartId = 'Z2lkOi8vc2hvcGlmeS9DaGVja291dC9kMTZmM2EzMDM4Yjc4N=';
+   * const cartId = 'Z2lkOi8vc2hvcGlmeS9DYXJ0L2QzNDMxMmNiYjU5NGM4MDA0MGJkZWIxMjU4YzAxOGE3';
    * const lineItems = [
    *   {
    *     id: 'TViZGE5Y2U1ZDFhY2FiMmM2YT9rZXk9NTc2YjBhODcwNWIxYzg0YjE5ZjRmZGQ5NjczNGVkZGU=',
    *     quantity: 5,
-   *     variantId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yOTEwNjAyMjc5Mg=='
+   *     merchandiseId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yOTEwNjAyMjc5Mg=='
    *   }
    * ];
    *
@@ -130,12 +130,12 @@ class CartResource extends Resource {
    * });
    *
    * @param {String} cartId The ID of the cart to update a line item on.
-   * @param {Object[]} lineItems A list of line item information to update. See the {@link https://shopify.dev/api/storefront/2022-04/input-objects/CartLineUpdateInput|Storefront API reference} for valid input fields for each line item.
+   * @param {Object[]} lines A list of line item information to update. See the {@link https://shopify.dev/api/storefront/2022-04/input-objects/CartLineUpdateInput|Storefront API reference} for valid input fields for each line item.
    * @return {Promise|GraphModel} A promise resolving with the updated cart.
    */
-  updateLineItems(cartId, lineItems) {
+  updateLineItems(cartId, lines) {
     return this.graphQLClient
-      .send(cartLinesUpdateMutation, {cartId, lines: lineItems})
+      .send(cartLinesUpdateMutation, {cartId, lines})
       .then(handleCartMutation('cartLinesUpdate', this.graphQLClient));
   }
 
@@ -143,7 +143,7 @@ class CartResource extends Resource {
    * Updates the attributes on a cart
    *
    * @example
-   * const cartId = 'Z2lkOi8vc2hvcGlmeS9DaGVja291dC9kMTZmM2EzMDM4Yjc4N=';
+   * const cartId = 'Z2lkOi8vc2hvcGlmeS9DYXJ0L2QzNDMxMmNiYjU5NGM4MDA0MGJkZWIxMjU4YzAxOGE3';
    * const input = [{key: "MyKey", value: "MyValue"}];
    *
    * client.cart.updateAttributes(cartId, input).then((cart) => {

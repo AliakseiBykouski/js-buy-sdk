@@ -1,0 +1,15 @@
+fragment VariantWithPlansFragment on ProductVariant {
+  ...VariantFragment
+  sellingPlanAllocations(first: 250) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    edges {
+      cursor
+      node {
+        ...SellingPlanAllocationFragment
+      }
+    }
+  }
+}
