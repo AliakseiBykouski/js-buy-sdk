@@ -37,7 +37,7 @@ class ProductResource extends Resource {
    * @return {Promise|GraphModel[]} A promise resolving with an array of `GraphModel`s of the products.
    */
   fetchAll(first = 20, withPlans = false) {
-    const query = withPlans ? productConnectionQuery : productWithPlansConnectionQuery;
+    const query = withPlans ? productWithPlansConnectionQuery : productConnectionQuery;
     return this.graphQLClient
       .send(query, {first})
       .then(defaultResolver('products'))
